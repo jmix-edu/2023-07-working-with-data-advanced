@@ -3,22 +3,28 @@ package com.company.jmixpm.entity;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.entity.annotation.JmixId;
 import io.jmix.core.metamodel.annotation.JmixEntity;
+import io.jmix.core.metamodel.annotation.JmixProperty;
 
 import java.util.UUID;
 
-@JmixEntity
+@JmixEntity(annotatedPropertiesOnly = true)
 public class ProjectStats {
 
+    @JmixProperty
     @JmixGeneratedValue
     @JmixId
     private UUID id;
 
+
     private String projectName;
 
+    @JmixProperty
     private Integer taskCount;
 
+    @JmixProperty
     private Integer plannedEfforts;
 
+    @JmixProperty
     private Integer actualEfforts;
 
     public Integer getActualEfforts() {

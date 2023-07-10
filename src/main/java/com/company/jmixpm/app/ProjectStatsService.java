@@ -1,12 +1,15 @@
 package com.company.jmixpm.app;
 
+import com.company.jmixpm.entity.Project;
 import com.company.jmixpm.entity.ProjectStats;
+import com.company.jmixpm.entity.Task;
 import io.jmix.core.DataManager;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjectStatsService {
@@ -18,7 +21,7 @@ public class ProjectStatsService {
     }
 
     public List<ProjectStats> fetchProjectStatistics() {
-        /*List<Project> projects = dataManager.load(Project.class).all().list();
+        List<Project> projects = dataManager.load(Project.class).all().list();
 
         List<ProjectStats> projectStats = projects.stream()
                 .map(project -> {
@@ -36,8 +39,7 @@ public class ProjectStatsService {
                     return stats;
                 })
                 .collect(Collectors.toList());
-        return projectStats;*/
-        return Collections.emptyList();
+        return projectStats;
     }
 
     private Integer getActualEfforts(UUID projectId) {
