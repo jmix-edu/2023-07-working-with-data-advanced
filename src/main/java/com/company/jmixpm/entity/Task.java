@@ -11,7 +11,7 @@ import io.jmix.core.metamodel.annotation.JmixEntity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
+import java.util.Date;
 import java.util.UUID;
 
 @JmixEntity
@@ -45,10 +45,13 @@ public class Task {
     @Column(name = "ESTIMATED_EFFORTS")
     private Integer estimatedEfforts;
 
-    @OnDeleteInverse(DeletePolicy.CASCADE)
+    @OnDeleteInverse(DeletePolicy.DENY)
     @JoinColumn(name = "PROJECT_ID", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Project project;
+
+    @Column(name = "IS_CLOSED")
+    private Boolean isClosed = false;
 
     @DeletedBy
     @Column(name = "DELETED_BY")
@@ -56,24 +59,14 @@ public class Task {
 
     @DeletedDate
     @Column(name = "DELETED_DATE")
-    private OffsetDateTime deletedDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date deletedDate;
 
-    @Column(name = "IS_CLOSED")
-    private Boolean isClosed = false;
-
-    public Boolean getIsClosed() {
-        return isClosed;
-    }
-
-    public void setIsClosed(Boolean isClosed) {
-        this.isClosed = isClosed;
-    }
-
-    public OffsetDateTime getDeletedDate() {
+    public Date getDeletedDate() {
         return deletedDate;
     }
 
-    public void setDeletedDate(OffsetDateTime deletedDate) {
+    public void setDeletedDate(Date deletedDate) {
         this.deletedDate = deletedDate;
     }
 
@@ -83,6 +76,14 @@ public class Task {
 
     public void setDeletedBy(String deletedBy) {
         this.deletedBy = deletedBy;
+    }
+
+    public Boolean getIsClosed() {
+        return isClosed;
+    }
+
+    public void setIsClosed(Boolean isClosed) {
+        this.isClosed = isClosed;
     }
 
     public String getLabel() {

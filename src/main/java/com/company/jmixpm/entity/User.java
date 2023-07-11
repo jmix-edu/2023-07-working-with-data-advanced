@@ -14,11 +14,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.time.OffsetDateTime;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @JmixEntity
 @Entity
@@ -72,16 +68,17 @@ public class User implements JmixUserDetails, HasTimeZone {
 
     @DeletedDate
     @Column(name = "DELETED_DATE")
-    private OffsetDateTime deletedDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date deletedDate;
 
     @Transient
     protected Collection<? extends GrantedAuthority> authorities;
 
-    public OffsetDateTime getDeletedDate() {
+    public Date getDeletedDate() {
         return deletedDate;
     }
 
-    public void setDeletedDate(OffsetDateTime deletedDate) {
+    public void setDeletedDate(Date deletedDate) {
         this.deletedDate = deletedDate;
     }
 
