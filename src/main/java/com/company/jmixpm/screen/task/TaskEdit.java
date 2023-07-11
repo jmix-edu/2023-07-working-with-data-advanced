@@ -2,9 +2,12 @@ package com.company.jmixpm.screen.task;
 
 import com.company.jmixpm.entity.Project;
 import com.company.jmixpm.entity.Task;
+import io.jmix.core.SaveContext;
 import io.jmix.ui.component.ComboBox;
 import io.jmix.ui.screen.*;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Set;
 
 @UiController("Task_.edit")
 @UiDescriptor("task-edit.xml")
