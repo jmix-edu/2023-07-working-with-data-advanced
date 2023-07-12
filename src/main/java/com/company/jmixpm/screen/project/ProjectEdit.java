@@ -3,6 +3,7 @@ package com.company.jmixpm.screen.project;
 import com.company.jmixpm.app.ProjectsService;
 import com.company.jmixpm.datatype.ProjectLabels;
 import com.company.jmixpm.entity.Project;
+import com.company.jmixpm.screen.user.UserBrowse;
 import com.company.jmixpm.validation.ProjectsBeanValidationService;
 import io.jmix.ui.Notifications;
 import io.jmix.ui.component.Button;
@@ -72,5 +73,10 @@ public class ProjectEdit extends StandardEditor<Project> {
     @Subscribe("saveWithBeanValidationSerivce")
     public void onSaveWithBeanValidationSerivceClick(Button.ClickEvent event) {
         projectsBeanValidationService.saveProject(getEditedEntity());
+    }
+
+    @Install(to = "participantsTable.add", subject = "screenConfigurer")
+    private void participantsTableAddScreenConfigurer(Screen screen) {
+        ((UserBrowse) screen).setProjectFilter(getEditedEntity());
     }
 }

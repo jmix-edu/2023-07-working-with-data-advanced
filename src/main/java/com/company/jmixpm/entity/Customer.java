@@ -5,6 +5,7 @@ import io.jmix.core.entity.annotation.SystemLevel;
 import io.jmix.core.metamodel.annotation.*;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @JmixEntity
@@ -35,6 +36,17 @@ public class Customer {
     @JmixProperty
     @Transient
     private Project project;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Order> orders;
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
 
     public Project getProject() {
         return project;
