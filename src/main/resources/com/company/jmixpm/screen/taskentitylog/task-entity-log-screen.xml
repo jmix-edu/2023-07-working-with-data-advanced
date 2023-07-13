@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        caption="msg://taskEntityLogScreen.caption">
+    <data>
+        <collection id="tasksDc"
+                    class="com.company.jmixpm.entity.Task">
+            <fetchPlan extends="_base"/>
+            <loader id="tasksDl">
+                <query><![CDATA[select e from Task_ e]]></query>
+            </loader>
+        </collection>
+        <collection id="entityLogItemsDc"
+                    class="io.jmix.audit.entity.EntityLogItem">
+            <fetchPlan extends="_base"/>
+            <loader id="entityLogItemsDl">
+                <query>
+                    <![CDATA[select e from audit_EntityLog e where e.entityRef.entityId = :id order by e.eventTs]]>
+                </query>
+            </loader>
+            <collection id="entityLogAttrDc" property="attributes"/>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true">
+            <refresh loader="entityLogItemsDl">
+                <onComponentValueChanged component="taskField" param="id"/>
+            </refresh>
+        </dataLoadCoordinator>
+    </facets>
+    <layout spacing="true" expand="entityLogBox">
+        <comboBox id="taskField"/>
+        <hbox id="entityLogBox" width="100%" spacing="true">
+            <table id="entityLogTable"
+                   width="100%"
+                   height="100%"
+                   dataContainer="entityLogItemsDc">
+                <columns>
+                    <column id="username"/>
+                    <column id="type"/>
+                    <column id="eventTs"/>
+                </columns>
+            </table>
+            <table id="entityLogAttrTable"
+                   width="100%"
+                   height="100%"
+                   dataContainer="entityLogAttrDc">
+                <columns>
+                    <column id="name"/>
+                    <column id="value"/>
+                    <column id="valueId"/>
+                    <column id="oldValue"/>
+                    <column id="oldValueId"/>
+                </columns>
+            </table>
+        </hbox>
+    </layout>
+</window>

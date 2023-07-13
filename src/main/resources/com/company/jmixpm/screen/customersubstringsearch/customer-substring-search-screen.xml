@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        xmlns:c="http://jmix.io/schema/ui/jpql-condition"
+        caption="msg://customerSubstringSearchScreen.caption">
+    <data>
+        <collection id="customersDc"
+                    class="com.company.jmixpm.entity.Customer"
+                    fetchPlan="_base">
+            <loader id="customersDl">
+                <query>
+                    <![CDATA[select e from Customer e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.firstName like :name</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+<!--        <dataLoadCoordinator auto="true"/>-->
+        <dataLoadCoordinator>
+            <refresh loader="customersDl">
+                <onScreenEvent type="BeforeShow"/>
+                <onComponentValueChanged component="nameField"
+                                         likeClause="CASE_INSENSITIVE"
+                                         param="name"/>
+            </refresh>
+        </dataLoadCoordinator>
+    </facets>
+    <layout expand="customersTable" spacing="true">
+        <textField id="nameField" datatype="string"/>
+        <table id="customersTable"
+               width="100%"
+               dataContainer="customersDc">
+            <columns>
+                <column id="firstName"/>
+                <column id="lastName"/>
+                <column id="email"/>
+            </columns>
+        </table>
+    </layout>
+</window>

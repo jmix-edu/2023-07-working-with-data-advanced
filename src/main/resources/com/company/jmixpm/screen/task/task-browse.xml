@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
         xmlns:c="http://jmix.io/schema/ui/jpql-condition"
+        xmlns:dynattr="http://jmix.io/schema/dynattr/ui"
         caption="msg://taskBrowse.caption"
         focusComponent="tasksTable">
     <data readOnly="true">
@@ -19,6 +20,7 @@
     </data>
     <facets>
         <dataLoadCoordinator auto="true"/>
+        <dynattr:dynamicAttributes/>
         <screenSettings id="settingsFacet" auto="true"/>
     </facets>
     <actions>
@@ -37,6 +39,14 @@
         <filter id="filter"
                 dataLoader="tasksDl">
             <properties include=".*"/>
+            <configurations>
+                <configuration id="customConf" default="true">
+                    <groupFilter operation="AND">
+                        <propertyFilter property="name" operation="CONTAINS"/>
+                        <propertyFilter property="project" operation="EQUAL"/>
+                    </groupFilter>
+                </configuration>
+            </configurations>
         </filter>
         <groupTable id="tasksTable"
                     width="100%"
@@ -54,6 +64,7 @@
                 <column id="project"/>
                 <column id="project.projectLabels"/>
                 <column id="supposedEndDate"/>
+                <column id="+taskNotesProjectPart"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
